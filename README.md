@@ -59,3 +59,43 @@ Got ideas? Found an issue? Want to integrate more APIs?
 Contributions are welcome — fork the repo and send a pull request!
 
 ✨ Let TravelGenie take care of the planning, so you can focus on making memories.
+
+Tech Stack
+Backend: Node.js + Express (for API endpoints)
+
+AI Layer: OpenAI GPT with function calling enabled
+
+Database for RAG:
+
+Option 1: Pinecone / Weaviate / FAISS with pre-stored travel guides
+
+Option 2: A static JSON travel dataset if you don’t want to pay for APIs
+
+APIs (Optional):
+
+Google Places API (attractions, restaurants)
+
+Skyscanner API (flights)
+
+Booking.com API (hotels)
+
+Frontend: Simple React app with chat interface
+
+Workflow
+User sends a request:
+"Plan a 3-day trip to Kyoto in September with ₹20,000"
+
+Backend:
+
+Builds a prompt for GPT.
+
+Queries RAG layer to get relevant travel info.
+
+Model:
+
+Combines user input + RAG context.
+
+Returns Structured JSON itinerary.
+
+If user says: "Book my hotel" → Function Calling triggers backend booking logic.
+
