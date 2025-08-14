@@ -4,13 +4,17 @@ import fetch from "node-fetch";
 const router = express.Router();
 
 router.post("/travel-plan", async (req, res) => {
-  const { destination, duration, budget, travelStyle } = req.body;
+  const { prompt } = req.body;
 
-  // Build the prompt dynamically based on user inputs
-  const prompt = `Create a detailed travel plan for ${duration} days in ${destination}.
-Budget: ${budget}.
-Preferred travel style: ${travelStyle}.
-Include recommended places, activities, and food options.`;
+  // Chain of Thought Prompt — instruct model to reason step-by-step
+  const chainOfThoughtPrompt = `
+You are a professional travel planner.
+Think through the problem step-by-step before answering.
+First, explain your reasoning in a numbered list of steps.
+Then, clearly give the final travel plan.
+
+User Request: ${prompt}
+`;
 
   try {
     const response = await fetch(
@@ -24,7 +28,7 @@ Include recommended places, activities, and food options.`;
         body: JSON.stringify({
           contents: [
             {
-              parts: [{ text: prompt }]
+              parts: [{ text: chainOfThoughtPrompt }]
             }
           ]
         })
